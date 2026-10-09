@@ -65,8 +65,17 @@ O tipo `Double` foi preservado para manter o modelo original; uma evolução par
 uso financeiro real deve definir arredondamento e migrar valores monetários para
 `BigDecimal`. Nenhuma biblioteca nova foi adicionada.
 
-## Situação da validação local
+## Resultado da validação
 
-Em 08/10/2026, as tentativas de executar `test bootJar` com JDK 21 e Gradle 9.7.1 foram interrompidas antes dos testes por `java.nio.file.AccessDeniedException` no fechamento de arquivos JAR (`ZipFileSystemProvider.removeFileSystem`) no ambiente Windows restrito. O erro persistiu com caminhos mais curtos. A compilação direta gerou as 12 classes principais, mas também apresentou a exceção interna ao fechar recursos; portanto, não é considerada uma validação limpa.
+Validação concluída em **09/10/2026**, no GitHub Actions, com **Java 21** e
+**Gradle 9.7.1**, executando `sh gradlew test bootJar --no-daemon`.
 
-**Os testes foram escritos, mas sua execução e a geração do bootJar não foram concluídas neste ambiente.** Execute `gradlew.bat test bootJar` em um terminal local com JDK 21 para concluir a validação. A revisão de whitespace com `git diff --check` passou.
+- **18 testes aprovados**: 17 de integração da API e 1 de inicialização.
+- **Zero falhas, zero erros e zero testes ignorados.**
+- Compilação e geração do executável `bootJar` concluídas com sucesso.
+- Workflow incluído em `.github/workflows/test.yml` para verificações futuras.
+
+[Consultar a execução aprovada no GitHub Actions](https://github.com/h3nrique-beep/atividade-refac/actions/runs/37923826785).
+
+A validação em Linux no GitHub resolveu a pendência de execução causada por
+`AccessDeniedException` no ambiente Windows local restrito.
